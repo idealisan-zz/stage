@@ -1,0 +1,46 @@
+# Typora显示成写字板或者Word的有页边样式
+
+一直以来，我觉得Typora是个挺好的编辑器，尤其是用来写文档，美观又方便。我对美观的要求还是有点高的，不是多么花里胡哨，但是也不能太简陋。问题就出在“太简陋”——Typora默认的任何主题都没有显示页面边的阴影或者哪怕是边界线，就是整个窗口一个白色区域，我实在没本法对着这么一个简陋的界面写字，这样的界面实在没有让人写作的欲望。我十分欣赏锤子便签的界面，它可能看起来那么拟物化、不时尚、不轻便，但是却很让人有写作的欲望——因为他看起来就像是一个记事本的样子。
+
+以前没发现Typora的主题样式其实是CSS样式表文件，修改起来这么方便，这次我尝试去修改了样式表，很满意。主要修改了newsprint主题的样式，这个主题本身比较接近我喜欢的样式。主要的修改包括：#write添加了box-shadow来显示边界阴影，添加了背景颜色从而和窗口背景相区分，增大了max-width以便更宽一点但仍然保持半个屏幕以内的宽度方便对照显示；“html,body”下修改了背景颜色，颜色比write更深一点。
+
+## 代码
+
+修改的是在Typora偏好设置里打开主题文件夹下的newsprint.css。最终代码如下：
+
+```css
+#write {
+	box-shadow:0px 0px 8px #666666;
+	max-width: 45em;
+	background-color:#ffffff;
+}
+```
+
+```css
+html, body {
+	background-color: #cdd7e6;
+	font-family: "PT Serif", 'Times New Roman', Times, serif;
+	color: #1f0909;
+	line-height: 1.5em;
+}
+```
+
+## 我的样式
+
+铛铛！现在Typora看起来就像是Windows的写字板一样，带有页面左右边界，让人更有写作欲望了。
+
+我的Typora：
+
+![image-20191124113400903](F:\Library\Docs\typora\img\image-20191124113400903.png)
+
+Windows的写字板长这个样：
+
+![image-20191124113500601](F:\Library\Docs\typora\img\image-20191124113500601.png)
+
+……怎么看起来还是觉得写字板更好看，我考虑是不是要改成写字板的颜色。用QQ的取色器看了写字板的颜色，发现写字板的背景颜色是有渐变的，我不太会用CSS做渐变，那就用纯的蓝灰色好了，编辑区域的颜色就是纯白，和图片背景、其他的颜色更容易融合。
+
+最后，我的Typora是这样的，神似Windows的写字板：
+
+![image-20191124114425269](F:\Library\Docs\typora\img\image-20191124114425269.png)
+
+只是Typora没有ribbon的菜单栏样式，不过本身也没太大必要，Typora不会用来做太复杂的文档样式，这就够了。

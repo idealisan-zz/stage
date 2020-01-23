@@ -1,0 +1,830 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>打包备份linux系统</title><link href='https://fonts.loli.net/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+svg[id^="mermaidChart"] { line-height: 1em; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+
+/* meyer reset -- http://meyerweb.com/eric/tools/css/reset/ , v2.0 | 20110126 | License: none (public domain) */
+
+@include-when-export url(https://fonts.loli.net/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext);
+
+/* =========== */
+
+:root {
+  --active-file-bg-color: #dadada;
+  --active-file-bg-color: rgba(32, 43, 51, 0.63);
+  --active-file-text-color: white;
+  --bg-color: #f3f2ee;
+  --text-color: #1f0909;
+  --control-text-color: #444;
+  --rawblock-edit-panel-bd: #e5e5e5;
+
+  --select-text-bg-color: rgba(32, 43, 51, 0.63);
+  --select-text-font-color: white;
+}
+
+pre {
+  --select-text-bg-color: #36284e;
+  --select-text-font-color: #fff;
+}
+
+html {
+  font-size: 16px;
+}
+
+ty-footer{
+  background-color:f0f0f0;
+}
+
+html, body {
+  background-color: #cdd7e6;
+  font-family: "PT Serif", 'Times New Roman', Times, serif;
+  color: #1f0909;
+  line-height: 1.5em;
+}
+
+#write {
+padding:40px;
+}
+/*
+@media (max-width: 36em) {
+   #write {
+     padding-left: 1em;
+      padding-right: 1em;
+   }
+}
+*/
+
+#write {
+  box-shadow:0px 0px 8px #666666;
+  max-width: 45em;
+  background-color:#FFFFFF;
+}
+
+ol li {
+  list-style-type: decimal;
+  list-style-position: outside;
+}
+ul li {
+  list-style-type: disc;
+  list-style-position: outside;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* styles */
+
+/* ====== */
+
+/* headings */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+}
+h1 {
+  font-size: 1.875em;
+  /*30 / 16*/
+  line-height: 1.6em;
+  /* 48 / 30*/
+  margin-top: 2em;
+}
+h2,
+h3 {
+  font-size: 1.3125em;
+  /*21 / 16*/
+  line-height: 1.15;
+  /*24 / 21*/
+  margin-top: 2.285714em;
+  /*48 / 21*/
+  margin-bottom: 1.15em;
+  /*24 / 21*/
+}
+h3 {
+  font-weight: normal;
+}
+h4 {
+  font-size: 1.125em;
+  /*18 / 16*/
+  margin-top: 2.67em;
+  /*48 / 18*/
+}
+h5,
+h6 {
+  font-size: 1em;
+  /*16*/
+}
+h1 {
+  border-bottom: 1px solid;
+  margin-bottom: 1.875em;
+  padding-bottom: 0.8125em;
+}
+/* links */
+
+a {
+  text-decoration: none;
+  color: #065588;
+}
+a:hover,
+a:active {
+  text-decoration: underline;
+}
+/* block spacing */
+
+p,
+blockquote,
+.md-fences {
+  margin-bottom: 1.5em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 1.5em;
+}
+/* blockquote */
+
+blockquote {
+  font-style: italic;
+  border-left: 5px solid;
+  margin-left: 2em;
+  padding-left: 1em;
+}
+/* lists */
+
+ul,
+ol {
+  margin: 0 0 1.5em 1.5em;
+}
+/* tables */
+.md-meta,.md-before, .md-after {
+  color:#999;
+}
+
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border-top: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table tr th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table tr td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table tr th:first-child,
+table tr td:first-child {
+    margin-top: 0;
+}
+table tr th:last-child,
+table tr td:last-child {
+    margin-bottom: 0;
+}
+
+code,
+.md-fences {
+  background-color: #dadada;
+}
+
+code {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.md-fences {
+  margin-left: 2em;
+  margin-bottom: 3em;
+  padding-left: 1ch;
+  padding-right: 1ch;
+}
+
+pre,
+code,
+tt {
+  font-size: .875em;
+  line-height: 1.714285em;
+}
+/* some fixes */
+
+h1 {
+  line-height: 1.3em;
+  font-weight: normal;
+  margin-bottom: 0.5em;
+}
+
+p + ul,
+p + ol{
+  margin-top: .5em;
+}
+
+h3 + ul,
+h4 + ul,
+h5 + ul,
+h6 + ul,
+h3 + ol,
+h4 + ol,
+h5 + ol,
+h6 + ol {
+  margin-top: .5em;
+}
+
+li > ul,
+li > ol {
+  margin-top: inherit;
+  margin-bottom: 0;
+}
+
+li ol>li {
+  list-style-type: lower-alpha;
+}
+
+li li ol>li{
+  list-style-type: lower-roman;
+}
+
+h2,
+h3 {
+  margin-bottom: .75em;
+}
+hr {
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid;
+  border-left: none;
+}
+h1 {
+  border-color: #c5c5c5;
+}
+blockquote {
+  border-color: #bababa;
+  color: #656565;
+}
+
+blockquote ul,
+blockquote ol {
+  margin-left:0;
+}
+
+.ty-table-edit {
+  background-color: transparent;
+}
+thead {
+  background-color: #dadada;
+}
+tr:nth-child(even) {
+  background: #e8e7e7;
+}
+hr {
+  border-color: #c5c5c5;
+}
+.task-list{
+  padding-left: 1rem;
+}
+
+.md-task-list-item {
+  padding-left: 1.5rem;
+  list-style-type: none;
+}
+
+.md-task-list-item > input:before {
+  content: '\221A';
+  display: inline-block;
+  width: 1.25rem;
+    height: 1.6rem;
+  vertical-align: middle;
+  text-align: center;
+  color: #ddd;
+  background-color: #F3F2EE;
+}
+
+.md-task-list-item > input:checked:before,
+.md-task-list-item > input[checked]:before{
+  color: inherit;
+}
+
+#write pre.md-meta-block {
+  min-height: 1.875rem;
+  color: #555;
+  border: 0px;
+  background: transparent;
+  margin-top: -4px;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+.md-image>.md-meta {
+  color: #9B5146;
+}
+
+.md-image>.md-meta{
+  font-family: Menlo, 'Ubuntu Mono', Consolas, 'Courier New', 'Microsoft Yahei', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', serif;
+}
+
+
+#write>h3.md-focus:before{
+  left: -1.5rem;
+  color:#999;
+  border-color:#999;
+}
+#write>h4.md-focus:before{
+  left: -1.5rem;
+  top: .25rem;
+  color:#999;
+  border-color:#999;
+}
+#write>h5.md-focus:before{
+  left: -1.5rem;
+  top: .0.3125rem;
+  color:#999;
+  border-color:#999;
+}
+#write>h6.md-focus:before{
+  left: -1.5rem;
+  top: 0.3125rem;
+  color:#999;
+  border-color:#999;
+}
+
+.md-toc:focus .md-toc-content{
+  margin-top: 19px;
+}
+
+.md-toc-content:empty:before{
+  color: #065588;
+}
+.md-toc-item {
+  color: #065588;
+}
+#write div.md-toc-tooltip {
+  background-color: #f3f2ee;
+}
+
+#typora-sidebar {
+  background-color: #dde7f6;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.375);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.375);
+}
+
+.pin-outline #typora-sidebar {
+  /* background: inherit; */
+  box-shadow: none;
+  border-right: 1px solid;
+}
+
+.pin-outline #typora-sidebar:hover .outline-title-wrapper {
+  border-left:1px solid;
+}
+
+.outline-item:hover {
+  background-color: #dadada;
+  border-left: 28px solid #dadada;
+  border-right: 18px solid #dadada;
+}
+
+.typora-node .outline-item:hover {
+    border-right: 28px solid #dadada;
+}
+
+.outline-expander:before {
+  content: "\f0da";
+  font-family: FontAwesome;
+  font-size:14px;
+  top: 1px;
+}
+
+.outline-expander:hover:before,
+.outline-item-open>.outline-item>.outline-expander:before {
+  content: "\f0d7";
+}
+
+.modal-content {
+  background-color: #f3f2ee;
+}
+
+.auto-suggest-container ul li {
+  list-style-type: none;
+}
+
+/** UI for electron */
+
+.megamenu-menu,
+#top-titlebar, #top-titlebar *,
+.megamenu-content {
+  background: #f3f2ee;
+  color: #1f0909;
+}
+
+.megamenu-menu-header {
+  border-bottom: 1px dashed #202B33;
+}
+
+.megamenu-menu {
+  box-shadow: none;
+  border-right: 1px dashed;
+}
+
+header, .context-menu, .megamenu-content, footer {
+  font-family: "PT Serif", 'Times New Roman', Times, serif;
+    color: #1f0909;
+}
+
+#megamenu-back-btn {
+  color: #1f0909;
+  border-color: #1f0909;
+}
+
+.megamenu-menu-header #megamenu-menu-header-title:before {
+  color: #1f0909;
+}
+
+.megamenu-menu-list li a:hover, .megamenu-menu-list li a.active {
+  color: inherit;
+  background-color: #e8e7df;
+}
+
+.long-btn:hover {
+  background-color: #e8e7df;
+}
+
+#recent-file-panel tbody tr:nth-child(2n-1) {
+    background-color: transparent !important;
+}
+
+.megamenu-menu-panel tbody tr:hover td:nth-child(2) {
+    color: inherit;
+}
+
+.megamenu-menu-panel .btn {
+  background-color: #D2D1D1;
+}
+
+.btn-default {
+  background-color: transparent;
+}
+
+.typora-sourceview-on #toggle-sourceview-btn,
+.ty-show-word-count #footer-word-count {
+  background: #c7c5c5;
+}
+
+#typora-quick-open {
+    background-color: inherit;
+}
+
+.md-diagram-panel {
+  margin-top: 8px;
+}
+
+.file-list-item-file-name {
+  font-weight: initial;
+}
+
+.file-list-item-summary {
+  opacity: 1;
+}
+
+.file-list-item {
+  color: #777;
+}
+
+.file-list-item.active {
+  background-color: inherit;
+  color: black;
+}
+
+.ty-side-sort-btn.active {
+  background-color: inherit;
+}
+
+.file-list-item.active .file-list-item-file-name  {
+  font-weight: bold;
+}
+
+.file-list-item{
+    opacity:1 !important;
+}
+
+.file-library-node.active>.file-node-background{
+  background-color: rgba(32, 43, 51, 0.63);
+  background-color: var(--active-file-bg-color);
+}
+
+.file-tree-node.active>.file-node-content{
+  color: white;
+  color: var(--active-file-text-color);
+}
+
+.md-task-list-item>input {
+  margin-left: -1.6em;
+  margin-top: calc(1rem - 12px);
+}
+
+input {
+  border: 1px solid #aaa;
+}
+
+.megamenu-menu-header #megamenu-menu-header-title,
+.megamenu-menu-header:hover, 
+.megamenu-menu-header:focus {
+  color: inherit;
+}
+
+.dropdown-menu .divider {
+  border-color: #e5e5e5;
+}
+
+/* https://github.com/typora/typora-issues/issues/2046 */
+.os-windows-7 strong,
+.os-windows-7 strong  {
+  font-weight: 760;
+}
+
+.ty-preferences .btn-default {
+  background: transparent;
+}
+
+.ty-preferences .window-header {
+  border-bottom: 1px dashed #202B33;
+  box-shadow: none;
+}
+
+ .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class='typora-export os-windows' >
+<div  id='write'  class = 'is-node'><h1><a name="使用tar打包备份linux系统" class="md-header-anchor"></a><span>使用tar打包备份linux系统</span></h1><h2><a name="为什么使用tar" class="md-header-anchor"></a><span>为什么使用tar</span></h2><p><span>注意，使用tar而不要使用zip打包，因为tar可以选择保留linux的文件属性，包括用户权限信息等，这对于系统备份来讲很重要。</span></p><h2><a name="四个必备参数和一个可选参数" class="md-header-anchor"></a><span>四个必备参数和一个可选参数</span></h2><p><span>使用tar打包备份linux系统的命令是：</span></p><p><code>sudo tar -cpvzf /system_backup.tar.gz --exclude=/proc --exclude=/tmp --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run -P /</code></p><p><span>其中的 </span><code>-cpvzf</code><span> 里边的字母分别意味着create创建、privilege权限、verbose罗嗦模式、zip压缩、file文件。显然，可以关闭罗嗦模式，因为打包整个系统的过程设计的文件特别多，罗嗦模式会有特别多的信息显示出来，并且即便关闭了罗嗦模式错误信息（exception）也会照常显示，不影响排查错误。其他的选项对于八分系统来讲是必要的。</span></p><p><span>压缩（z，zip）不是真的必须，但是显然压缩一下有助于快速转移备份。</span></p><h2><a name="-f参数的特殊性" class="md-header-anchor"></a><span>-f参数的特殊性</span></h2><p><span>tar这个工具在收到f参数后，必须立马收到目的地文件的路径，所以f和文件路径必须紧紧相连。在上边的命令当中，f必须放在五个字母参数的最后，也就是f和文件路径之间自能有空格，不能有其他任何符号。</span></p><h2><a name="使用--exclude文件夹）路径排除掉不应该打包的路径" class="md-header-anchor"></a><span>使用--exclude=</span><code>文件（夹）路径</code><span>排除掉不应该打包的路径</span></h2><blockquote><p><span>/proc：一个虚拟文件系统，系统运行的每一个进程都会自动在这个目录下面创建一个进程目录。既然是系统自动创建，也就没必要备份的必要了。</span>
+<span>/tmp：一个临时文件夹，系统的一些临时文件会放在这里。</span>
+<span>/lost+found：系统发生错误时（比如非法关机），可以在这里找回一些丢失文件。</span>
+<span>/media：多媒体挂载点，像u盘、移动硬盘、windons分区等都会自动挂载到这个目录下。</span>
+<span>/mnt：临时挂载点，你可以自己挂载一些文件系统到这里。</span>
+<span>/run：系统从启动以来产生的一些信息文件。</span></p><p><span>/home：用户家目录，存放用户个人文件和应用程序。</span>
+<span>/boot：和系统启动相关的文件，像grub相关文件都放在这里，这个目录很重要！ </span></p></blockquote><h2><a name="别忘了最后的是打包的源路径" class="md-header-anchor"></a><span>别忘了最后的</span><code>/</code><span>是打包的源路径</span></h2><p><span>tar的最后一个参数是打包的源路径，也可以是多个路径的列表，备份系统的时候直接备份根路径</span><code>/</code><span>即可，但是由于它非常短，容易忽视，所以千万不要忘了。</span></p><p><span>其中的-P表示path，指定路径，而不是使用相对路径</span></p><h2><a name="转移备份文件" class="md-header-anchor"></a><span>转移备份文件</span></h2><p><span>打包了系统之后及时转移，使用</span><code>cp source dest</code><span>把备份文件（上边，的命令里它位于</span><code>/</code><span>）转移到别的位置。如果系统中挂载了存储设备，tar备份的时候也可以直接把目的文件放在该挂载位置，不一定放在根目录下。</span></p><p>&nbsp;</p><h2><a name="系统还原" class="md-header-anchor"></a><strong><span>系统还原</span></strong></h2><h5><a name="注意备份时一同备份了boot启动分区但恢复的时候磁盘分区可能发生了改变此时先备份新的启动分区回复旧的文件后再用新的启动分区回复回来才能启动" class="md-header-anchor"></a><em><span>注意，备份时一同备份了/boot启动分区，但恢复的时候磁盘分区可能发生了改变，此时先备份新的启动分区，回复旧的文件后再用新的启动分区回复回来才能启动。</span></em></h5><h5><a name="注意备份时没有排除etcfstab其中的文件系统表可能已经过时需要备份新的再还原系统后把新的还原回去" class="md-header-anchor"></a><em><span>注意，备份时没有排除/etc/fstab，其中的文件系统表可能已经过时，需要备份新的，再还原系统后把新的还原回去。</span></em></h5><p><em><span>系统备份的意义就在于系统哪天发生意外时可以系统还原拯救回来</span></em></p><p><span>这里有两种还原方式，如果你系统出问题了，但是还可以进入终端，那就可以直接解压备份文件进行还原。但是如果你连系统都不能登录了，就要使用LiveCD（U盘启动盘）进行还原了。</span></p><p><span>tar命令还原系统</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><span><span>​</span>x</span></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">备份前先切换到root用户，避免权限问题</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">$ sudo su</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">再切换到/（根目录）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"># cd /</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">还原</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">tar -xvpzf /media/Disk/myDisk/ubuntu_backup@2016-6-6.tar.gz -C /</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 192px;"></div><div class="CodeMirror-gutters" style="display: none; height: 192px;"></div></div></div></pre><p><strong><span>注意</span></strong><span>先创建一个临时目录用于挂载你的/根目录分区，sdaX代表你的/根目录分区，如果不知道就用</span><em><span>fdisk -l</span></em><span>查看一下，另外如果你的移动硬盘没有被自动挂载，你也需要手动创建一个临时目录进行挂载。</span></p><p><span>Note：因为 tar还原是只会覆盖相同的文件，但是这种方法只是恢复备份时的文件，就是说如果某些文件丢失或损坏了，这样可以恢复修复这些文件，但不能删除自备份到恢复前这期间所生成的其它文件，说白了就是假如你备份系统时有1234这四个文件，如果三天后，由于某些原因变成了1234’5（4改变了），你恢复后，就会变成12345，其中4’恢复成备份时的文件，5保留。所以大家要是想彻底还原成备份时候的样子最好彻底删除根目录下的所有文件，然后再还原，这样就可以还原成备份时的样子了。</span>
+<span>删除整个文件系统，比如运行命令rm -fr /*，那么你还原系统后一定要把你之前没有备份的目录手动创建，不然重启系统是有问题的。</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">mkdir proc tmp lost+found media mnt run</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 24px;"></div><div class="CodeMirror-gutters" style="display: none; height: 24px;"></div></div></div></pre><p>&nbsp;</p><p><span>LiveCD 还原系统</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#切换到root用户</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo su</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#进入到 / 目录</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">cd /</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">mkdir /mnt/sys</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">mount /dev/sdaX /mnt/sys</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">tar -xvpzf /media/myDisk/ubuntu_boot_backup@2016-6-6.tar.gz -C /mnt/sys</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 240px;"></div><div class="CodeMirror-gutters" style="display: none; height: 240px;"></div></div></div></pre><p><span>执行恢复命令之前请再确认一下你所键入的命令是不是你想要的，执行恢复命令可能需要一段不短的时间。</span></p><p><span>恢复命令结束时，你的工作还没完成，别忘了重新创建那些在备份时被排除在外的目录：</span>
+<span>#</span><span> mkdir proc</span>
+<span>#</span><span> mkdir lost+found</span>
+<span>#</span><span> mkdir mnt</span>
+<span>#</span><span> mkdir sys</span>
+<span>等等</span></p><p><span>当你重启电脑，你会发现一切东西恢复到你创建备份时的样子了！</span></p><p><span>PS：</span></p><p><span>还有一个稍微复杂点的livecd方式还原，如下：</span></p><p><span>先要对之前的启动文件和分区文件做一个备份，分别为/etc/fstab,/etc/fstab.d（可能没有，</span></p><p><span>/boot/grub/grub.cfg：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#cp /etc/fstab /media/用户名/移动硬盘对应盘符/</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#cp /boot/grub/grub.cfg /media/用户名/移动硬盘对应盘符/</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 72px;"></div><div class="CodeMirror-gutters" style="display: none; height: 72px;"></div></div></div></pre><p><span>接下来进行恢复系统，同样利用系统u盘进入livecd模式。同样进入root模式，查看分区情况</span></p><p><span>假设分区情况如上：/dev/sda1为boot分区，/dev/sda2为主分区，/dev/sda3为home分区。对home分区和主分区进行格式化：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#sudo su</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mkfs.ext4 /dev/sda2</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mkfs.ext4 /dev/sda3</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 120px;"></div><div class="CodeMirror-gutters" style="display: none; height: 120px;"></div></div></div></pre><p><span>然后分别进行挂载：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mount /dev/sda2 /mnt</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 24px;"></div><div class="CodeMirror-gutters" style="display: none; height: 24px;"></div></div></div></pre><p><span>新建home和boot文件:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mkdir /mnt/home</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mkdir /mnt/boot</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 72px;"></div><div class="CodeMirror-gutters" style="display: none; height: 72px;"></div></div></div></pre><p><span>挂载其他两个盘：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mount /dev/sda1 /mnt/boot</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mount /dev/sda3 /mnt/home</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 72px;"></div><div class="CodeMirror-gutters" style="display: none; height: 72px;"></div></div></div></pre><p><span>挂载数据盘：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mkdir /rescovery/mnt</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mkdir /rescovery/home</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mkdir /rescovery/boot</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mount -o loop /media/ubuntu/移动硬盘盘符/ubuntu_main.sfs /rescovery/mnt</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mount -o loop /media/ubuntu/移动硬盘盘符/ubuntu_home.sfs /rescovery/home</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mount -o loop /media/ubuntu/移动硬盘盘符/ubuntu_boot.sfs /rescovery/boot</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 336px;"></div><div class="CodeMirror-gutters" style="display: none; height: 336px;"></div></div></div></pre><p><span>复制文件：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#cp -a /recovery/mnt/* /mnt</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#cp -a /recovery/home/* /mnt/home</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#cp -a /recovery/boot/* /mnt/boot</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">然后拷贝之前的fstab和grub.cfg文件到硬盘：</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#cp /media/ubuntu/移动硬盘盘符/fstab /mnt/etc/</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#cp /media/ubuntu/移动硬盘盘符/grub.cfg /mnt/boot/grub/</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 264px;"></div><div class="CodeMirror-gutters" style="display: none; height: 264px;"></div></div></div></pre><p><span>挂载虚拟文件系统，这是为了后面修复引导做准备。</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mount --o bind /dev /mnt/dev</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mount --o bind /proc /mnt/proc</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#mount --o bind /sys /mnt/sys</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 120px;"></div><div class="CodeMirror-gutters" style="display: none; height: 120px;"></div></div></div></pre><p><span>chroot进入已经还原的操作系统。</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#chroot /mnt</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 24px;"></div><div class="CodeMirror-gutters" style="display: none; height: 24px;"></div></div></div></pre><p><span>查看当前UUID</span></p><p><span>由于我们格式化了分区，所以UUID发生了变化，若不修改，系统将无法正常挂载分区，导致启动异常。故需要修改本机系统的UUID设置,当前终端不要关闭，新建一个终端，输入blkid:</span></p><p><img src="打包备份linux系统.assets/v2-785c41221752adb984cce99eb4f574f9_hd.jpg" referrerpolicy="no-referrer" alt="img"></p><p><span>对fstab文件进行格式化两个盘的UUID的更改,在chroot过的端口输入：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#nano /etc/fstab</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 24px;"></div><div class="CodeMirror-gutters" style="display: none; height: 24px;"></div></div></div></pre><p><span>更改两个UUID，ctrl+x退出，Y保存。进行grub的更新：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#grub-install /dev/sda</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#update-grub</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 72px;"></div><div class="CodeMirror-gutters" style="display: none; height: 72px;"></div></div></div></pre><p><span>退出并卸载盘：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#exit</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#umount /mnt/dev</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#umount /mnt/sys</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#umount /proc</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#sync</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 216px;"></div><div class="CodeMirror-gutters" style="display: none; height: 216px;"></div></div></div></pre><p><span>重启即可</span></p><p>&nbsp;</p><p><span>=======================================================================</span></p><p><span>以及备份系统并还原到另一块硬盘上(硬盘大小均可不一致)</span></p><p><span>3.备份原理就是将系统文件压缩打包。由于Linux系统所有都是文件，故，只需要将系统打包即可。当然，必须除了当前系统运行中的文件以及临时文件。</span></p><p><span>打包有两种方式：a)，直接需要打包的Linux系统下压缩打包(亲测，发现在打包最后会报错，不知会不会有问题)。b). 使用Live USB，其实就是刚刚用U盘做的系统镜像。</span></p><p><span>我使用的是b)方式。</span></p><p>&nbsp;</p><p><span>A.在要备份的系统的电脑上，新插入刚刚安装了Ubuntu系统的硬盘，用来存储备份压缩包以及还原。</span></p><p>&nbsp;</p><p><span>B.使用U盘启动，进入Live USB界面，点击试用。</span></p><p>&nbsp;</p><p><span>C.进入试用Ubuntu后，先获取root权限。</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  sudo passwd</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  su root</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 72px;"></div><div class="CodeMirror-gutters" style="display: none; height: 72px;"></div></div></div></pre><p>&nbsp;</p><p><span>D.挂载备份的系统硬盘.可以使用fdisk -l(比如root权限)查看硬盘号，确认那个是原始需要备份系统硬盘，那个新插入的还原系统的硬盘。 在根目录下新建一个文件夹backup，用来挂载系统硬盘。在根目录下创建一个文件夹restore，用来挂载还原硬盘。</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  mount dev/sda1 /backup/ </span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; mount dev/sdb1 /restore/</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 72px;"></div><div class="CodeMirror-gutters" style="display: none; height: 72px;"></div></div></div></pre><p><span>注意：sda1,sdb1按照fdisk -l查看的的实际情况替换。</span></p><p><span>进入backup文件夹下查看是否挂载成功。如果挂载成功，文件夹下应该是备份Linux系统文件。</span></p><p>&nbsp;</p><p><span>E.压缩备份原始系统。进入restore还原硬盘下，新建一个文件夹backsrc,用来存储还原的文件。</span></p><p><span>压缩格式有很多，如果你的硬盘够大，建议使用低压缩格式，这样速度会很快。</span></p><p><span>压缩备份命令(路劲按照自己的实际情况替换，如果你是按照我的步骤做的，直接替换即可):</span></p><p><span>进入到backup备份系统目录下:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">tar cvpzf /restore/backsrc/backup.tgz --exclude=./proc --exclude=./lost+found --exclude=./mnt --exclude=./sys --exclude=media ./ </span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 72px;"></div><div class="CodeMirror-gutters" style="display: none; height: 72px;"></div></div></div></pre><p><span>解释：</span></p><p><span>--exclude ,是排除压缩的文件。就是将不需要的文件排除。</span></p><p><span>等待压缩完成。</span></p><p>&nbsp;</p><p><span>F.重点！！！备份原始系统的配置文件，以及新安装系统的启动文件。</span></p><p><span>进入backup原始系统下，备份系统配置文件fstab fstab.d</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">cd /backup/etc/</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">cp -pdr fstab fstab.d /restore/backsrc/</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 72px;"></div><div class="CodeMirror-gutters" style="display: none; height: 72px;"></div></div></div></pre><p><span>进入restore/还原目录下，备份系统启动文件grub.cfg.主要是用来获取新硬盘的UUID号，替换备份系统的内的UUID，不然在新硬盘上系统无法启动！</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">cd /restrore/boot/</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">cp -pdr grub.cfg /restore/backsrc/</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 72px;"></div><div class="CodeMirror-gutters" style="display: none; height: 72px;"></div></div></div></pre><p>&nbsp;</p><p><span>G.解压缩，还原系统到新硬盘下.</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">tar -xvpzf /restore/backsrc/backup.tgz -C /restore/</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 24px;"></div><div class="CodeMirror-gutters" style="display: none; height: 24px;"></div></div></div></pre><p>&nbsp;</p><p><span>H.替换刚刚备份的系统配置文件，以及修改启动文件中的UUID：</span></p><p><span>替换：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">cp -fdr /restore/backsrc/fstab fstab.d /restore/etc/</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 24px;"></div><div class="CodeMirror-gutters" style="display: none; height: 24px;"></div></div></div></pre><p><span>修改：</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="text"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="text"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">打开/restore/backsrc/grup.cfg</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 24px;"></div><div class="CodeMirror-gutters" style="display: none; height: 24px;"></div></div></div></pre><p><span>复制里面的UUID</span></p><p><span>打开/restore/boot/grup.cfg，将里面的UUID全部替换。</span></p><p>&nbsp;</p><p><span>现在一切还原完成。关闭电脑，拔掉U盘，拔掉旧的备份硬盘。重启电脑！</span></p><p>&nbsp;</p><p><span>完毕！！！</span></p></div>
+</body>
+</html>
