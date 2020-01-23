@@ -31,16 +31,16 @@ html, body {
 
 我的Typora：
 
-![image-20191124113400903](F:\Library\Docs\typora\img\image-20191124113400903.png)
+![image-20191124113400903](img\image-20191124113400903.png)
 
 Windows的写字板长这个样：
 
-![image-20191124113500601](F:\Library\Docs\typora\img\image-20191124113500601.png)
+![image-20191124113500601](img\image-20191124113500601.png)
 
 ……怎么看起来还是觉得写字板更好看，我考虑是不是要改成写字板的颜色。用QQ的取色器看了写字板的颜色，发现写字板的背景颜色是有渐变的，我不太会用CSS做渐变，那就用纯的蓝灰色好了，编辑区域的颜色就是纯白，和图片背景、其他的颜色更容易融合。
 
 最后，我的Typora是这样的，神似Windows的写字板：
 
-![image-20191124114425269](F:\Library\Docs\typora\img\image-20191124114425269.png)
+![image-20191124114425269](img\image-20191124114425269.png)
 
 只是Typora没有ribbon的菜单栏样式，不过本身也没太大必要，Typora不会用来做太复杂的文档样式，这就够了。
