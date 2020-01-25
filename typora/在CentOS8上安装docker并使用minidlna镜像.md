@@ -37,14 +37,20 @@ $ sudo yum-config-manager \
     https://download.docker.com/linux/centos/docker-ce.repo
 ```
 
-此处可能会提示接受GPG密钥，输入y并且按下回车即可。
-
 ##### 安装docker的特定版本
 
 由于centos的仓库里的containerd版本不太新，直接安装最新版本的docker会由于依赖版本不满足而无法安装，所以只能先用旧一些的版本。
 
 ```shell
 $ sudo yum install docker-ce-18.09.1 docker-ce-cli-18.09.1 containerd.io
+```
+
+此处可能会提示接受GPG密钥，输入y并且按下回车即可。
+
+开启docker后台进程并开机启动
+
+```shell
+$  systemctl enable docker --now
 ```
 
 检查docker
