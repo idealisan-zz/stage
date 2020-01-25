@@ -1,9 +1,8 @@
-
 <!doctype html>
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>Idealisan stage on github pages</title><link href='https://fonts.loli.net/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+<title>java web项目出现静态文件乱码，居然是jvm的错</title><link href='https://fonts.loli.net/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
 iframe { margin: auto; }
@@ -741,35 +740,6 @@ input {
 </style>
 </head>
 <body class='typora-export os-windows' >
-<div  id='write'  class = 'is-node'>
-<ol>
-<li><a href="typora\KVM安装Windows.html">KVM安装Windows</a></li>
-<li><a href="typora\linux安装docker compose的通用方法.html">linux安装docker compose的通用方法</a></li>
-<li><a href="typora\Typora插入各种应程序的配置文件代码格式选择.html">Typora插入各种应程序的配置文件代码格式选择</a></li>
-<li><a href="typora\我的服务器又被封tcping简单使用方法.html">我的服务器又被封tcping简单使用方法</a></li>
-<li><a href="typora\黑名单.html">黑名单</a></li>
-<li><a href="typora\在CentOS8上安装docker并使用minidlna镜像.html">在CentOS8上安装docker并使用minidlna镜像</a></li>
-<li><a href="index.html">index</a></li>
-<li><a href="typora\java web项目出现静态文件乱码，居然是jvm的错.html">java web项目出现静态文件乱码，居然是jvm的错</a></li>
-<li><a href="typora\linux查看所有开机启动项.html">linux查看所有开机启动项</a></li>
-<li><a href="typora\MPC HC 调整倍速倍率的方法.html">MPC HC 调整倍速倍率的方法</a></li>
-<li><a href="typora\Typora显示成写字板或者Word的有页边样式.html">Typora显示成写字板或者Word的有页边样式</a></li>
-<li><a href="typora\ubuntu开机进入紧急模式，exit出现io charset 8859-1 not found解决办法.html">ubuntu开机进入紧急模式，exit出现io charset 8859-1 not found解决办法</a></li>
-<li><a href="typora\UEFI安装Win7的处理过程.html">UEFI安装Win7的处理过程</a></li>
-<li><a href="typora\不要为WordPress使用反向代理服务.html">不要为WordPress使用反向代理服务</a></li>
-<li><a href="typora\为算算弱开启http掩藏.html">为算算弱开启http掩藏</a></li>
-<li><a href="typora\反编译APK.html">反编译APK</a></li>
-<li><a href="typora\向chrome或者firefox书签栏添加javascript脚本实现点击操作.html">向chrome或者firefox书签栏添加javascript脚本实现点击操作</a></li>
-<li><a href="typora\在Linux中使用C语言系统套接字调用编写回声网络服务器.html">在Linux中使用C语言系统套接字调用编写回声网络服务器</a></li>
-<li><a href="typora\如何把路由器当作交换机来使用？.html">如何把路由器当作交换机来使用？</a></li>
-<li><a href="typora\安卓ListView上下留白正确做法.html">安卓ListView上下留白正确做法</a></li>
-<li><a href="typora\彻底解决Eclipse自动补全变量名问题的方法步骤.html">彻底解决Eclipse自动补全变量名问题的方法步骤</a></li>
-<li><a href="typora\惠普瘦客户机自动开机的方法.html">惠普瘦客户机自动开机的方法</a></li>
-<li><a href="typora\打包备份linux系统.html">打包备份linux系统</a></li>
-<li><a href="typora\查看ubuntu的系统日志.html">查看ubuntu的系统日志</a></li>
-</ol>
-
-<a href="https://www.google.com/search?q=site%3Agp.idealisan.com">Google Index</a>
-</div>
+<div  id='write'  class = 'is-node'><h2><a name="java-web项目出现静态文件乱码居然是jvm的错" class="md-header-anchor"></a><span>java web项目出现静态文件乱码，居然是jvm的错</span></h2><p><span>项目里的js文件明明是用utf8写的，spring的过滤器和html的标签页都写清楚了utf8编码，但是浏览器收到的js文件确实乱码，导致js加载出来的页面也是乱码。</span></p><p><span>网上有几种办法：</span></p><ul><li><span>在html页头标注utf8编码</span></li><li><span>在spring的web.xml里使用编码过滤器，使用utf8编码</span></li><li><span>检查js文件自身编写的编码是否为utf8编码</span></li><li><span>JVM的启动参数里添加文件编码参数以确保js文件被作为utf8编码的文档读取</span></li></ul><p><span>实际上，前几点都很容易做到，而最后一条jvm的启动参数确实难以想到。</span></p><p><span>实际操作，在eclipse里的servers选项卡里，双击server，点击Overview下方的general下方的open launch configuration连接，在common选项卡的右侧，编码处选择utf8而不是默认的沿袭系统编码。也可以在arguments选项卡里添加-Dfile.encoding=UTF-8参数。</span></p><p><span>在实际的tomcat的运行环境里，比如我的服务器使用的就不是中文utf8的系统，那么需要修改catalina.sh或者对应的bat文件，在文件的开头或者第一次出现JAVA_OPTS的下方一行加上</span><strong><span>-Dfile.encoding=UTF-8</span></strong><span>参数。</span></p><p><span>真是太坑了。</span></p><a href="/">Home Page</a></div>
 </body>
 </html>
