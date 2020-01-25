@@ -87,6 +87,14 @@ $ docker run -d \
 
 任何以MINIDLNA_MEDIA_DIR打头的环境变量都会被认为是媒体文件夹。
 
+检查docker容器运行状态
+
+```shell
+$ docker ps -a
+```
+
+
+
 ##### 开放防火墙端口
 
 dlna使用ssdp、trivnet1服务，使用firewall-cmd开启端口
