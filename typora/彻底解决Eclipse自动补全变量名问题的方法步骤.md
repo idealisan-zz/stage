@@ -41,6 +41,10 @@ if(key != '=' && key != 0x20 &&contains(triggers,key)){
 
 代码修改成这样后，提示的时候按下空格或者等号，提示就会没掉，也不会自动补全了咯！！！
 
+实际上，除了tab、空格和等号，其他按键按下的时候也不想要上屏，只有回车的时候想要上屏，所以改成	`if (('\r'==key||'\n'==key)&&contains(triggers, key)) {`是最愉快的方法。这样做其实是白名单的方式，而上边的方法是黑名单方式。
+
+
+
 3.把修改好的org.eclipse.jface.text导出
 
 右键点击你的workspace里的org.eclipse.jface.text,选择export-->Deployable plugins and
