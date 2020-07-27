@@ -63,10 +63,13 @@ html, body {
   font-family: "PT Serif", 'Times New Roman', Times, serif;
   color: #1f0909;
   line-height: 1.5em;
+  height: 100%;
+
 }
 
 #write {
 padding:40px;
+min-height: 100%;
 }
 /*
 @media (max-width: 36em) {
