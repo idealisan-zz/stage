@@ -1,22 +1,23 @@
-
 <!doctype html>
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>Idealisan stage on github pages</title><link href='https://fonts.loli.net/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+<title>论文笔记</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
 .in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
 #write.first-line-indent p { text-indent: 2em; }
 #write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
 #write.first-line-indent li { margin-left: 2em; }
 .for-image #write { padding-left: 8px; padding-right: 8px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
 .typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
 @media screen and (max-width: 500px) {
   body.typora-export { padding-left: 0px; padding-right: 0px; }
   #write { padding-left: 20px; padding-right: 20px; }
@@ -25,14 +26,14 @@ body.typora-export { padding-left: 30px; padding-right: 30px; }
 }
 #write li > figure:last-child { margin-bottom: 0.5rem; }
 #write ol, #write ul { position: relative; }
-img { max-width: 100%; vertical-align: middle; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
 button, input, select, textarea { color: inherit; font: inherit; }
 input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
 *, ::after, ::before { box-sizing: border-box; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
 p { line-height: inherit; }
-h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
 p { orphans: 4; }
 h1 { font-size: 2rem; }
 h2 { font-size: 1.8rem; }
@@ -48,7 +49,7 @@ sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); 
 sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
 #write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
 figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
-figure > table { margin: 0px !important; }
+figure > table { margin: 0px; }
 tr { break-inside: avoid; break-after: auto; }
 thead { display: table-header-group; }
 table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
@@ -77,28 +78,31 @@ div.hr:focus { cursor: none; }
 li div { padding-top: 0px; }
 blockquote { margin: 1rem 0px; }
 li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
 li { margin: 0px; position: relative; }
 blockquote > :last-child { margin-bottom: 0px; }
 blockquote > :first-child, li > :first-child { margin-top: 0px; }
 .footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
 #write .footnote-line { white-space: pre-wrap; }
 @media print {
-  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
   #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
   .typora-export * { -webkit-print-color-adjust: exact; }
-  html.blink-to-pdf { font-size: 13px; }
-  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write { break-after: avoid; }
   .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
 }
 .footnote-line { margin-top: 0.714em; font-size: 0.7em; }
 a img, img a { cursor: pointer; }
 pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
 p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
 p > .md-image:only-child { display: inline-block; width: 100%; }
 #write .MathJax_Display { margin: 0.8em 0px 0px; }
 .md-math-block { width: 100%; }
 .md-math-block:not(:empty)::after { display: none; }
-[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
 .md-task-list-item { position: relative; list-style-type: none; }
 .task-list-item.md-task-list-item { padding-left: 0px; }
 .md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
@@ -142,22 +146,32 @@ a.md-print-anchor { white-space: pre !important; border-width: initial !importan
 .MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
 .os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
 .md-diagram-panel > svg { max-width: 100%; }
-[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; height: auto; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
 [lang="mermaid"] .node text { font-size: 1rem; }
 table tr th { border-bottom: 0px; }
 video { max-width: 100%; display: block; margin: 0px auto; }
 iframe { max-width: 100%; width: 100%; border: none; }
 .highlight td, .highlight tr { border: 0px; }
-svg[id^="mermaidChart"] { line-height: 1em; }
 mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
 .md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
 mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-require-zoom-fix foreignobject { font-size: var(--mermaid-font-zoom); }
+
+
+
+@media only screen {
 
 
 
 /* meyer reset -- http://meyerweb.com/eric/tools/css/reset/ , v2.0 | 20110126 | License: none (public domain) */
 
-@include-when-export url(https://fonts.loli.net/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext);
+/* @include-when-export url(https://fonts.loli.net/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext); */
 
 /* =========== */
 
@@ -192,10 +206,14 @@ html, body {
   font-family: "PT Serif", 'Times New Roman', Times, serif;
   color: #1f0909;
   line-height: 1.5em;
+  height: 100%;
+
 }
+
 
 #write {
 padding:40px;
+min-height: 100%;
 }
 /*
 @media (max-width: 36em) {
@@ -736,62 +754,14 @@ input {
   border-bottom: 1px dashed #202B33;
   box-shadow: none;
 }
+  
+}
 
- .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+
+ :root {--mermaid-font-zoom:1.25em ;}  .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
 </style>
 </head>
-<body class='typora-export os-windows' >
-<div  id='write'  class = 'is-node'>
-<ol>
-<li><a href="typora/C%23%20实现图形界面版TCPing.html">C# 实现图形界面版TCPing</a></li>
-<li><a href="typora/CentOS%208%20安装%20ntfs-3g%20并开机挂载磁盘分区.html">CentOS 8 安装 ntfs-3g 并开机挂载磁盘分区</a></li>
-<li><a href="typora/CentOS%208%20如何更正时区.html">CentOS 8 如何更正时区</a></li>
-<li><a href="typora/C%20Sharp%20实现图形界面版TCPing.html">C Sharp 实现图形界面版TCPing</a></li>
-<li><a href="typora/GitHub%20Pages%20工具设计.html">GitHub Pages 工具设计</a></li>
-<li><a href="index.html">index</a></li>
-<li><a href="index%20-%20副本.html">index - 副本</a></li>
-<li><a href="typora/IPv6%20静态IP配置的心得.html">IPv6 静态IP配置的心得</a></li>
-<li><a href="typora/Java%20UDP%20编程简介.html">Java UDP 编程简介</a></li>
-<li><a href="typora/java%20web项目出现静态文件乱码，居然是jvm的错.html">java web项目出现静态文件乱码，居然是jvm的错</a></li>
-<li><a href="typora/java快速连接多个字节数组的方法.html">java快速连接多个字节数组的方法</a></li>
-<li><a href="typora/Kotlin项目在IDEA中打包成JAR的方法.html">Kotlin项目在IDEA中打包成JAR的方法</a></li>
-<li><a href="typora/KVM安装Windows.html">KVM安装Windows</a></li>
-<li><a href="typora/linux安装docker%20compose的通用方法.html">linux安装docker compose的通用方法</a></li>
-<li><a href="typora/linux查看所有开机启动项.html">linux查看所有开机启动项</a></li>
-<li><a href="typora/MPC%20HC%20调整倍速倍率的方法.html">MPC HC 调整倍速倍率的方法</a></li>
-<li><a href="typora/nginx配置php出现500错误的原因.html">nginx配置php出现500错误的原因</a></li>
-<li><a href="typora/randomouse%20一个用小老鼠生成随机数的思路.html">randomouse 一个用小老鼠生成随机数的思路</a></li>
-<li><a href="typora/Typora插入各种应程序的配置文件代码格式选择.html">Typora插入各种应程序的配置文件代码格式选择</a></li>
-<li><a href="typora/Typora显示成写字板或者Word的有页边样式.html">Typora显示成写字板或者Word的有页边样式</a></li>
-<li><a href="typora/ubuntu开机进入紧急模式，exit出现io%20charset%208859-1%20not%20found解决办法.html">ubuntu开机进入紧急模式，exit出现io charset 8859-1 not found解决办法</a></li>
-<li><a href="typora/UEFI安装Win7的处理过程.html">UEFI安装Win7的处理过程</a></li>
-<li><a href="typora/安卓ListView上下留白正确做法.html">安卓ListView上下留白正确做法</a></li>
-<li><a href="typora/安卓手机相册显示不全的解决办法.html">安卓手机相册显示不全的解决办法</a></li>
-<li><a href="typora/编译安装aria2c并配置前端UI.html">编译安装aria2c并配置前端UI</a></li>
-<li><a href="typora/不要为WordPress使用反向代理服务.html">不要为WordPress使用反向代理服务</a></li>
-<li><a href="typora/不要自己用java写字节数组byte%5B%5D转整型int或者长整型long的方法，JDK有自带方法.html">不要自己用java写字节数组byte[]转整型int或者长整型long的方法，JDK有自带方法</a></li>
-<li><a href="typora/查看ubuntu的系统日志.html">查看ubuntu的系统日志</a></li>
-<li><a href="typora/彻底解决Eclipse自动补全变量名问题的方法步骤.html">彻底解决Eclipse自动补全变量名问题的方法步骤</a></li>
-<li><a href="typora/打包备份linux系统.html">打包备份linux系统</a></li>
-<li><a href="typora/反编译APK.html">反编译APK</a></li>
-<li><a href="typora/黑名单.html">黑名单</a></li>
-<li><a href="typora/惠普瘦客户机自动开机的方法.html">惠普瘦客户机自动开机的方法</a></li>
-<li><a href="typora/家庭大型局域网配置.html">家庭大型局域网配置</a></li>
-<li><a href="typora/家庭局域网廉价配置指南.html">家庭局域网廉价配置指南</a></li>
-<li><a href="typora/解决WordPress更新、安装主题、插件要求登录FTP.html">解决WordPress更新、安装主题、插件要求登录FTP</a></li>
-<li><a href="typora/论文笔记.html">论文笔记</a></li>
-<li><a href="typora/那些不熟悉的缩写是什么意思.html">那些不熟悉的缩写是什么意思</a></li>
-<li><a href="typora/如何把路由器当作交换机来使用？.html">如何把路由器当作交换机来使用？</a></li>
-<li><a href="typora/使用NetBeans创建基础的Java%20Web项目%20服务端与客户端%20解一元二次方程.html">使用NetBeans创建基础的Java Web项目 服务端与客户端 解一元二次方程</a></li>
-<li><a href="typora/为算算弱开启http掩藏.html">为算算弱开启http掩藏</a></li>
-<li><a href="typora/我的服务器又被封tcping简单使用方法.html">我的服务器又被封tcping简单使用方法</a></li>
-<li><a href="typora/向chrome或者firefox书签栏添加javascript脚本实现点击操作.html">向chrome或者firefox书签栏添加javascript脚本实现点击操作</a></li>
-<li><a href="typora/夜神模拟器创建安卓7虚拟机并设置代理.html">夜神模拟器创建安卓7虚拟机并设置代理</a></li>
-<li><a href="typora/在CentOS8上安装docker并使用minidlna镜像.html">在CentOS8上安装docker并使用minidlna镜像</a></li>
-<li><a href="typora/在Linux中使用C语言系统套接字调用编写回声网络服务器.html">在Linux中使用C语言系统套接字调用编写回声网络服务器</a></li>
-</ol>
-
-<a href="https://www.google.com/search?q=site%3Agp.idealisan.com">Google Index</a>
-</div>
+<body class='typora-export os-windows'>
+<div id='write'  class=''><h2><a name="machine-learning-based-analysis-of-sepsis--review" class="md-header-anchor"></a><span>Machine Learning Based Analysis of Sepsis : Review</span></h2><p><span>基于机器学习的脓毒症分析：回顾</span></p><p><span>本文是一篇总结性的文章，大致描述了脓毒症的特征和十项先前发布的这方面的技术方法，对这一领域的入门有所帮助。</span></p><h2><a name="临床诊断的方法" class="md-header-anchor"></a><span>临床诊断的方法</span></h2><p><span>脓毒症的临床诊断方法有两个：</span></p><ol start='' ><li><span>SIRS，全身性炎症反应综合征</span></li><li><span>qSOFA，快速顺序器官衰竭评估</span></li></ol><p><img src="%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20210105194809968.png" referrerpolicy="no-referrer" alt="image-20210105194809968"></p><h2><a name="十个技术方法" class="md-header-anchor"></a><span>十个技术方法</span></h2><h3><a name="1用于提取特征的聚类方法2012年" class="md-header-anchor"></a><span>1.用于提取特征的聚类方法，2012年</span></h3><p><span>方法：使用两组数据，有或者没有乳酸水平的特征，使用贝叶斯网络分析两者的关系。</span></p><p><span>结论：排除了心率这个参数；研究中使用了呼吸速率（RR），白细胞（WBC），温度，平均动脉压（MAP），乳酸，住院天数（LOS）和败血症发生率（SO）；结论是乳酸水平可以预测SIRS标准。</span></p><p><span>数据来源：不详</span></p><h3><a name="2图计算方法adapdbn2016" class="md-header-anchor"></a><span>2.图计算方法AdapDBN，2016</span></h3><p><span>使用动态贝叶斯网络捕捉脓毒症风险因素。</span></p><p><span>用于构建AdapDBN的数据： Physician’s knowledge, published clinical research, epidemiological status and patient’s data</span></p><p><span>根据患者动迁状态动态调整筛选频率。</span></p><p><span>处理initial sepsis, severe sepsis and septic shock三种情况。</span></p><p><span>缩短症状检测时间；改善治疗效果。</span></p><p><span>数据源：不详</span></p><h3><a name="3因果依赖图2016" class="md-header-anchor"></a><span>3.因果依赖图，2016</span></h3><p><span>数据库：MEDAN，最大的可用的多中心的脓毒症数据库之一。【暂不知公开性】</span></p><p><span>根据：</span></p><ol start='' ><li><span>收治时候的患者状况</span></li><li><span>24h后的状况</span></li><li><span>48h后的状况</span></li></ol><p><span>分成三个集合。主要关注患者的生理指标和个人信息。</span></p><p><span>结论：脓毒症发展的高峰期是患者收治入ICU后的24h左右。</span></p><h3><a name="4使用远程监控方案对门诊败血症做远程检测" class="md-header-anchor"></a><span>4.使用远程监控方案对门诊败血症做远程检测</span></h3><p><span>未提及具体算法，提及的败血症风险指标包括：心率，呼吸频率，温度，血压和可疑感染。</span></p><p><span>生成每日报告并发送给护理人员</span></p><h3><a name="5cfoa-chaotic-fruitfly-optimization）学习策略" class="md-header-anchor"></a><span>5.CFOA （Chaotic Fruitfly Optimization）学习策略</span></h3><p><span>2018年发表了论文提高KELM（内核极限学习机）的性能。</span></p><p><span>使用chaotic population initialization和chaotic local search提高性能。</span></p><p><span>特征选择是通过随机森林完成的，而KELM参数的优化是通过提出的CFOA（具有五重交叉验证）完成的。</span></p><h3><a name="6热成像体温模式" class="md-header-anchor"></a><span>6.热成像体温模式</span></h3><p><span>考虑到外耳或鼻尖与内耳等核心温度之间的温差（ETD）。 他们使用模糊C均值（FCM）聚类算法，将ETD分为不同的聚类。 ETD中从5-6F变为1F的簇代表败血症。 此过程使用热图像作为输入来计算ETD。</span></p><h3><a name="7meta分析2019" class="md-header-anchor"></a><span>7.Meta分析，2019</span></h3><p><span>数据库：MIMIC-III（v.13）</span></p><p><span>考虑了对败血症进行分类的金标准，并针对特异性，敏感性，阳性和阴性似然比和诊断奇数比对这些标准中的每一个做出了结论</span></p><p><span>将不同的预测模型（例如InSight，SVM，ApeX，深度神经网络和Logistic回归）用于SIRS，ICD-9，ICD-10等不同的标准</span></p><p><span>结论：机器学习技术的强大预测性能可以改善败血症的诊断，从而降低医院的死亡率。</span></p><h3><a name="8名为ros的脓毒症筛选工具2019" class="md-header-anchor"></a><span>8.名为“RoS”的脓毒症筛选工具，2019</span></h3><p><span>诊断方法：比较SIRS、SOFA、qSOFA、MEWS和NEWS等之后，使用的是qSOFA</span></p><p><span>数据：49个城市社区医院急诊科的22个月成人患者的电子健康记录数据</span></p><p><span>方法：使用Rhee临床监测标准；特征选择过程的三个阶段被用作对败血症筛选的现有模型的评价，与主题专家的协商以及监督机器学习方法的梯度增强方法。在这项回顾性研究中，RoS评分比推荐的常规基准筛查工具更及时且与众不同。</span></p><h3><a name="9层次分析方法2019" class="md-header-anchor"></a><span>9.层次分析方法，2019</span></h3><p><span>数据描述：连续的，高频率的数据</span></p><p><span>对高风险患者使用生理体征检测的数据（每分钟）；使用Heart rate (HR), non invasive blood pressure (BP), temperature, respiratory rate (RR) and white blood cell count (WBC) 做二分类，这些特征被用于持续预测发生脓毒症的可能性；使用了一种两层方法，每层有不同的滑动时间窗口大小。第一层是30，60，120min的时间窗口。第二层是10和20min。用滑动时间窗口来收集生理数据流。模型估计的概率被赋予硬阈值0.5，用于预测脓毒症。使用的性能指标是敏感性，特异性，正预测值（PPV），准确性和F2得分。与其他现有的层叠分类器相比，在线特征提取方法是该方法的特色。</span></p><a href="/">Home Page</a></div>
 </body>
 </html>
